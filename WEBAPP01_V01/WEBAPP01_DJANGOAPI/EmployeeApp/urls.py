@@ -10,10 +10,10 @@ urlpatterns = [
   # path('department/<int:id>/', department_detail_view),  # App-level detail URL
   
   path(r'department', views.departmentApi),
-  path(r'department/<int:id>/', views.departmentApi),
+  path(r'department/<int:id>', views.departmentApi),
   
   path(r'employee', views.employeeApi),
-  path(r'employee/<int:id>/', views.employeeApi),
+  path(r'employee/<int:id>', views.employeeApi),
   
-  path(r'Employee/SaveFile', views.SaveFile)
+  path(r'employee/SaveFile', views.SaveFile)
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

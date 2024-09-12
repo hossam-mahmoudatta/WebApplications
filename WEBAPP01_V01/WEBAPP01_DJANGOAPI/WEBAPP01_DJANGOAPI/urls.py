@@ -21,7 +21,5 @@ from django.urls import path, include # Include the app's URLs
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path(r'', include('EmployeeApp.urls'))
-    # path('department/', include('EmployeeApp.urls')), # Include the app's URLs
-    path('', include('EmployeeApp.urls'))         # Map root URL to app-level URLs
+    path(r'', include('EmployeeApp.urls'))         # Map root URL to app-level URLs
 ]
