@@ -78,3 +78,7 @@ def SaveFile(request):
   file = request.FILES['myFile']
   file_name = default_storage.save(file.name, file)
   return JsonResponse(file_name, safe = False);
+
+@csrf_exempt
+def home(request):
+  return render(request, '../templates/home.html')  # Render a template for the homepage
