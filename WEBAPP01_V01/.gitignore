@@ -25,7 +25,7 @@ media/
 *.log
 
 # Database (if using SQLite)
-*.sqlite3
+# *.sqlite3
 
 # Jupyter Notebook checkpoints (if using Jupyter)
 .ipynb_checkpoints/
