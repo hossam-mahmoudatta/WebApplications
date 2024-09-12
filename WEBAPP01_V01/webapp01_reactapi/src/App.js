@@ -6,7 +6,7 @@ import {Department} from './Department';
 import {Employee} from './Employee';
 import {Navigation} from './Navigation';
 
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 function App() {
   return (
@@ -18,11 +18,11 @@ function App() {
 
         <Navigation/>
 
-        <Switch>
+        <Routes>
           <Route path='/' component={Home} exact/>
           <Route path='/department' component={Department}/>
           <Route path='/employee' component={Employee}/>
-        </Switch>
+        </Routes>
       </div>
     </BrowserRouter>
   );
