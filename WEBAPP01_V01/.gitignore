@@ -5,6 +5,7 @@ __pycache__/
 # Virtual Environment
 WEBAPP01_VENV/
 env/
+webapp01_reactapi/node_modules
 
 # Django secret key
 .env
