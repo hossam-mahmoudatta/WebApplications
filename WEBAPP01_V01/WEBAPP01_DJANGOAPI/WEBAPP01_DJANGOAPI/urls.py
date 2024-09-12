@@ -17,8 +17,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include # Include the app's URLs
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path(r'', include('EmployeeApp.urls'))
+    # path('department/', include('EmployeeApp.urls')), # Include the app's URLs
+    path('', include('EmployeeApp.urls'))         # Map root URL to app-level URLs
 ]
