@@ -5,6 +5,8 @@ __pycache__/
 # Virtual Environment
 WEBAPP01_VENV/
 env/
+
+# React environment Folders
 webapp01_reactapi/node_modules
 requirements.txt
 
@@ -31,3 +33,6 @@ static/
 
 # Jupyter Notebook checkpoints (if using Jupyter)
 .ipynb_checkpoints/
+
+# Mac dependent files
+.DS_Store
