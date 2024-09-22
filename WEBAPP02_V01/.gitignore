@@ -1,0 +1,19 @@
+# For .NET
+DotNetAPI/bin/
+DotNetAPI/obj/
+DotNetAPI/*.user
+DotNetAPI/*.vspscc
+DotNetAPI/*.vssscc
+DotNetAPI/*.csproj.user
+
+# For Angular
+AngularApp/node_modules/
+AngularApp/dist/
+AngularApp/.angular/
+AngularApp/.idea/
+AngularApp/.vscode/
+AngularApp/.env
+
+# General
+*.log
+*.DS_Store
