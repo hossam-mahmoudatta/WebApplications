@@ -1,18 +1,19 @@
 # For .NET
-DotNetAPI/bin/
-DotNetAPI/obj/
-DotNetAPI/*.user
-DotNetAPI/*.vspscc
-DotNetAPI/*.vssscc
-DotNetAPI/*.csproj.user
+API/bin/
+API/obj/
+API/*.user
+API/*.vs
+API/*.vspscc
+API/*.vssscc
+API/*.csproj.user
 
 # For Angular
-AngularApp/node_modules/
-AngularApp/dist/
-AngularApp/.angular/
-AngularApp/.idea/
-AngularApp/.vscode/
-AngularApp/.env
+UI/node_modules/
+UI/dist/
+UI/.angular/
+UI/.idea/
+UI/.vscode/
+UI/.env
 
 # General
 *.log
