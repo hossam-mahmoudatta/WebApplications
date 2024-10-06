@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* styles.css */
+
+body {
+  font-family: 'Afacad Flux';
+  font-size: 20px; /* Increase the base font size */
+}
+
+
+body.light-mode {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+

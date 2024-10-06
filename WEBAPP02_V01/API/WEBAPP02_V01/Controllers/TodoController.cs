@@ -5,76 +5,106 @@ using System.Data.SqlClient;
 
 namespace WEBAPP02_V01.Controllers
 {
-    // [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     [ApiController]
     public class TodoController : ControllerBase
     {
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
         public TodoController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
         [HttpGet("get_tasks")]
-        public JsonResult get_tasks()
+        public async Task<JsonResult> Get_tasks()
         {
-            string query = "select * from todo";
+            string query = "SELECT * FROM todo ORDER BY id";
+            
             DataTable table = new DataTable();
-            string SqlDataSource = _configuration.GetConnectionString("mydb");
             SqlDataReader myReader;
+
+            string SqlDataSource = _configuration.GetConnectionString("mydb");
+
             using (SqlConnection myCon = new SqlConnection(SqlDataSource))
             {
-                myCon.Open();
+                await myCon.OpenAsync();
                 using (SqlCommand myCommand = new SqlCommand(query, myCon))
                 {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
+                    using (myReader = await myCommand.ExecuteReaderAsync())
+                    {
+                        table.Load(myReader);
+                    }
                 }
             }
-
             return new JsonResult(table);
         }
 
 
         [HttpPost("add_task")]
-        public JsonResult add_task([FromForm] string task)
+        public async Task<JsonResult> Add_task([FromForm] string task)
         {
-            string query = "insert into todo values (@task)";
-            DataTable table = new DataTable();
+            string query = "INSERT INTO todo VALUES (@task)";
+
             string SqlDataSource = _configuration.GetConnectionString("mydb");
-            SqlDataReader myReader;
+
             using (SqlConnection myCon = new SqlConnection(SqlDataSource))
             {
-                myCon.Open();
+                await myCon.OpenAsync();
                 using (SqlCommand myCommand = new SqlCommand(query, myCon))
                 {
                     myCommand.Parameters.AddWithValue("@task", task);
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
+                    await myCommand.ExecuteNonQueryAsync();
                 }
             }
-            return new JsonResult("Added Successfully");
+
+            // Return the success message along with the updated tasks
+            var updatedTasks = await Get_tasks();
+            return new JsonResult(new { message = "Added Successfully", tasks = updatedTasks.Value });
         }
 
-
-        [HttpPost("delete_task")]
-        public JsonResult delete_task([FromForm] string id)
+        [HttpPost("update_task")]
+        public async Task<JsonResult> Update_task([FromForm] string id, [FromForm] string task)
         {
-            string query = "delete from todo where id = @id";
-            DataTable table = new DataTable();
+            string query = "UPDATE todo SET task = @task WHERE id = @id";
+            
             string SqlDataSource = _configuration.GetConnectionString("mydb");
-            SqlDataReader myReader;
+
             using (SqlConnection myCon = new SqlConnection(SqlDataSource))
             {
-                myCon.Open();
+                await myCon.OpenAsync();
                 using (SqlCommand myCommand = new SqlCommand(query, myCon))
                 {
                     myCommand.Parameters.AddWithValue("@id", id);
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
+                    myCommand.Parameters.AddWithValue("@task", task);
+                    await myCommand.ExecuteNonQueryAsync();
                 }
             }
-            return new JsonResult("Deleted Successfully");
+
+            // Return the success message along with the updated tasks
+            var updatedTasks = await Get_tasks();
+            return new JsonResult(new { message = "Updated Successfully", tasks = updatedTasks.Value });
+        }
+
+        [HttpPost("delete_task")]
+        public async Task<JsonResult> Delete_task([FromForm] string id)
+        {
+            string query = "DELETE FROM todo WHERE id = @id";
+
+            string SqlDataSource = _configuration.GetConnectionString("mydb");
+
+            using (SqlConnection myCon = new SqlConnection(SqlDataSource))
+            {
+                await myCon.OpenAsync();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@id", id);
+                    await myCommand.ExecuteNonQueryAsync();
+                }
+            }
+
+            // Return the success message along with the updated tasks
+            var updatedTasks = await Get_tasks();
+            return new JsonResult(new { message = "Deleted Successfully", tasks = updatedTasks.Value });
         }
     }
 }

@@ -1,11 +1,12 @@
 # For .NET
 API/bin/
 API/obj/
-API/*.user
-API/*.vs
-API/*.vspscc
-API/*.vssscc
-API/*.csproj.user
+API/.user/
+API/.vs/
+API/.vspscc/
+API/.vssscc/
+API/.csproj.user/
+.vs/
 
 # For Angular
 UI/node_modules/
