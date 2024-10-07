@@ -6,6 +6,14 @@ API/.vs/
 API/.vspscc/
 API/.vssscc/
 API/.csproj.user/
+##############################
+bin/
+obj/
+.user/
+.vs/
+.vspscc/
+.vssscc/
+.csproj.user/
 .vs/
 
 # For Angular
@@ -15,6 +23,13 @@ UI/.angular/
 UI/.idea/
 UI/.vscode/
 UI/.env
+##############################
+node_modules/
+dist/
+.angular/
+.idea/
+.vscode/
+.env
 
 # General
 *.log
