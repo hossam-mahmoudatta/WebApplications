@@ -5,6 +5,7 @@ import { ThemeService } from './theme.service'; // Adjust the path as necessary
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,12 +16,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 
 export class AppComponent {
-  title = 'todo';
+  title = "Todo List";
 
   tasks: any = [];
-  newtask: string = ''; // Initialize the newtask variable
+  newtask: string = ""; // Initialize the newtask variable
+  editingTaskID: string = ""; // Track the task being edited
+  editedTaskValue: string = ""; // Track the edited task value
+  
   // currentTaskID: string = ''; // Store the current task ID
-  editingTaskID: string = ''; // Store the current task ID
 
   APIURL = "http://localhost:8000/"
 
@@ -36,48 +39,57 @@ export class AppComponent {
 
   // #################### Get Task Method ####################
   async get_tasks() {
-    this.http.get(this.APIURL + "get_tasks").subscribe((res) => {
-      this.tasks = res;
-    })
+    try {
+      const response = await firstValueFrom(this.http.get(this.APIURL + "get_tasks"));
+      this.tasks = (response as any[]).map(task => ({ ...task, isEditing: false }));
+    } catch (error) {
+      console.error("Error fetching tasks", error);
+    }
   }
 
   // #################### Add Task Method ####################
   async add_task(task: string) {
+    task = task.trim(); // Trim whitespace from the task string
+
+    if (task.length === 0) {
+      alert("Task cannot be empty.");
+      return;
+    }
+
     let body = new FormData();
     body.append('task', task);
 
-    if (this.editingTaskID) {
-      body.append('id', this.editingTaskID);
-      try {
-        this.http.post(this.APIURL + "update_task", body).subscribe((res: any) => {
-          alert(res.message);
-          this.get_tasks();
-          this.editingTaskID = ""; // Push the new task to the tasks array
-          this.newtask = "";
-        })
-      } catch (error) {
-          console.error("Error updating task:", error);
-      }
-    } else {
-      try {
-        this.http.post(this.APIURL + "add_task", body).subscribe((res: any) => {
-          alert(res.message);
-          this.get_tasks();
-          this.newtask = "";
-          this.tasks.push(res); // Push the new task to the tasks array
-        })
-      } catch (error) {
-          console.error("Error adding task:", error);
-      }
+    try {
+      await firstValueFrom(this.http.post(this.APIURL + "add_task", body));
+      await this.get_tasks();
+    } catch (error) {
+        console.error("Error adding task:", error);
     }
   }
 
+  // #################### Edit Task Method ####################
   edit_task(task: any) {
-    this.editingTaskID = task.id; // Store the current task ID
-    task.isEditing = true; // Set the task to edit
+    this.tasks.forEach((t: any) => t.isEditing = false); // Reset all tasks' edit mode
+    task.isEditing = true; // Enable edit mode for the selected task
   }
 
+  // #################### Cancel the Edit Process ####################
+  cancel_edit(task: any) {
+    this.editingTaskID = ""; // Clear the ID of the task being edited
+    this.editedTaskValue = ""; // Clear the edited task value
+  }
+
+  // #################### Saves changes to the edited task ####################
+  save_edited_task() {
+    this.add_task(this.editedTaskValue); // Reuse the add_task method to handle update logic
+  }
+
+  // #################### Update task ####################
   update_task(task: any) {
+    let body = new FormData();
+    body.append('id', task.id);
+    body.append('task', task.task.trim());
+    
     this.add_task(task.task); // Set the task to edit
     task.isEditing = false; // Reset the editing flag
   }
