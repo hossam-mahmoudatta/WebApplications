@@ -41,7 +41,12 @@ export class AppComponent {
   async get_tasks() {
     try {
       const response = await firstValueFrom(this.http.get(this.APIURL + "get_tasks"));
-      this.tasks = (response as any[]).map(task => ({ ...task, isEditing: false }));
+      this.tasks = (response as any[]).map(task => ({ 
+        ...task, 
+        isEditing: false,
+        date_added: new Date(task.date_added), // Ensure it's a Date object
+        last_modified: new Date(task.last_modified) // Ensure it's a Date object
+      }));
     } catch (error) {
       console.error("Error fetching tasks", error);
     }
@@ -60,8 +65,24 @@ export class AppComponent {
     body.append('task', task);
 
     try {
-      await firstValueFrom(this.http.post(this.APIURL + "add_task", body));
-      await this.get_tasks();
+      const response: any = await firstValueFrom(this.http.post(this.APIURL + "add_task", body));
+      
+      // Check if response contains tasks and if it's in the expected format
+      if (response && response.tasks) {
+        // Assuming the newly added task is the last in the response
+        const newTask = response.tasks[response.tasks.length - 1];
+
+        this.tasks.push({
+            id: newTask.id, // Make sure this ID is available in the response
+            task: newTask.task, // Use the task from the response
+            date_added: new Date(), // Use the date from the response
+            last_modified: new Date(), // Use the last modified date from the response
+            isEditing: false
+        });
+        alert("Task added successfully!"); // Optional: Show success message
+    } else {
+        console.error("Unexpected response structure", response);
+    }
     } catch (error) {
         console.error("Error adding task:", error);
     }
@@ -93,6 +114,7 @@ export class AppComponent {
       try {
         await firstValueFrom(this.http.post(this.APIURL + "update_task", body));
         task.isEditing = false; // Exit edit mode after update
+        task.last_modified = new Date(); // Update the last modified date
         await this.get_tasks(); // Refresh the task list
       } catch (error) {
         console.error("Error updating the task:", error);

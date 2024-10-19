@@ -43,7 +43,7 @@ namespace WEBAPP02_V01.Controllers
         [HttpPost("add_task")]
         public async Task<JsonResult> Add_task([FromForm] string task)
         {
-            string query = "INSERT INTO todo (task, date_created, last_modified) VALUES (@task, @date_created, @last_modified)";
+            string query = "INSERT INTO todo (task, date_added, last_modified) VALUES (@task, @date_added, @last_modified)";
 
             string SqlDataSource = _configuration.GetConnectionString("mydb");
 
@@ -54,7 +54,7 @@ namespace WEBAPP02_V01.Controllers
                 {
                     myCommand.Parameters.AddWithValue("@task", task);
                     // Set the current date and time for both date_created and last_modified
-                    myCommand.Parameters.AddWithValue("@date_created", DateTime.Now);
+                    myCommand.Parameters.AddWithValue("@date_added", DateTime.Now);
                     myCommand.Parameters.AddWithValue("@last_modified", DateTime.Now);
                     await myCommand.ExecuteNonQueryAsync();
                 }

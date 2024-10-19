@@ -52,6 +52,8 @@
       <tr>
         <th>#</th> <!-- Column for task number -->
         <th>Task</th> <!-- Column for task description -->
+        <th>Date Created</th>
+        <th>Last Modified</th>
         <th>Actions</th> <!-- Column for action buttons -->
       </tr>
     </thead>
@@ -67,7 +69,10 @@
           <!-- Show task text if not in edit mode -->
           {{ task.task }}
         </td>
-        
+
+        <td>{{ task.date_added | date: 'yyyy-MM-dd HH:mm:ss' }}</td> <!-- Display date created -->
+        <td>{{ task.last_modified | date: 'yyyy-MM-dd HH:mm:ss' }}</td> <!-- Display last modified -->
+
         <td>
           <button 
             class="btn btn-warning btn-sm mx-1"
@@ -86,6 +91,12 @@
           <td>
             <input [(ngModel)]="task.task" placeholder="Edit task..." />
           </td>
+          
+          <td>
+            {{ task.date_added | date:'short' }}
+            <!-- Keep the date added static during edit -->
+          </td>
+
           <td>
             <button class="btn btn-success btn-sm mx-1" (click) = "update_task(task)">
               Update
