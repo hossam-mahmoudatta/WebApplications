@@ -6,8 +6,12 @@ body {
   font-family: 'Afacad Flux';
   /* font-family: Manjari; */
   font-size: 20px; /* Increase the base font size */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+h1, h2, p, button {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
 body.light-mode {
   background-color: #ffffff;

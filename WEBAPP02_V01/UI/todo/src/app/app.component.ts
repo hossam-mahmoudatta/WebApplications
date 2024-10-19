@@ -75,8 +75,7 @@ export class AppComponent {
 
   // #################### Cancel the Edit Process ####################
   cancel_edit(task: any) {
-    this.editingTaskID = ""; // Clear the ID of the task being edited
-    this.editedTaskValue = ""; // Clear the edited task value
+    task.isEditing = false; // Enable edit mode for the selected task
   }
 
   // #################### Saves changes to the edited task ####################
@@ -85,13 +84,22 @@ export class AppComponent {
   }
 
   // #################### Update task ####################
-  update_task(task: any) {
-    let body = new FormData();
-    body.append('id', task.id);
-    body.append('task', task.task.trim());
-    
-    this.add_task(task.task); // Set the task to edit
-    task.isEditing = false; // Reset the editing flag
+  async update_task(task: any) {
+    if (task.task.trim()) {
+      let body = new FormData();
+      body.append('id', task.id);
+      body.append('task', task.task.trim());
+  
+      try {
+        await firstValueFrom(this.http.post(this.APIURL + "update_task", body));
+        task.isEditing = false; // Exit edit mode after update
+        await this.get_tasks(); // Refresh the task list
+      } catch (error) {
+        console.error("Error updating the task:", error);
+      }
+    } else {
+      alert("Task cannot be empty!");
+    }
   }
 
   async delete_task(id: any) {
@@ -99,10 +107,8 @@ export class AppComponent {
     body.append('id', id);
 
     try {
-      this.http.post(this.APIURL + "delete_task", body).subscribe((res: any) => {
-        alert(res.message);
-        this.get_tasks();
-      })
+      await firstValueFrom(this.http.post(this.APIURL + "delete_task", body));
+      await this.get_tasks();
     } catch(error) {
       console.error("Error deleting task:", error);
     }
