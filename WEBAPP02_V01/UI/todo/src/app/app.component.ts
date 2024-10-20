@@ -66,23 +66,18 @@ export class AppComponent {
 
     try {
       const response: any = await firstValueFrom(this.http.post(this.APIURL + "add_task", body));
-      
-      // Check if response contains tasks and if it's in the expected format
-      if (response && response.tasks) {
-        // Assuming the newly added task is the last in the response
-        const newTask = response.tasks[response.tasks.length - 1];
+    
+      // Assuming the newly added task is the last in the response
+      const newTask = response.tasks[response.tasks.length - 1];
 
-        this.tasks.push({
-            id: newTask.id, // Make sure this ID is available in the response
-            task: newTask.task, // Use the task from the response
-            date_added: new Date(), // Use the date from the response
-            last_modified: new Date(), // Use the last modified date from the response
-            isEditing: false
-        });
-        alert("Task added successfully!"); // Optional: Show success message
-    } else {
-        console.error("Unexpected response structure", response);
-    }
+      this.tasks.push({
+          id: newTask.id, // Make sure this ID is available in the response
+          task: newTask.task, // Use the task from the response
+          date_added: newTask.date_added, // Use the date from the response
+          last_modified: newTask.last_modified, // Use the last modified date from the response
+          isEditing: false
+      });
+      alert("Task added successfully!"); // Optional: Show success message
     } catch (error) {
         console.error("Error adding task:", error);
     }
