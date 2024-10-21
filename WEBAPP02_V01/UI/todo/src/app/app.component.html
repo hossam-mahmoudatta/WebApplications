@@ -73,17 +73,19 @@
         <td>{{ task.date_added | date: 'yyyy-MM-dd HH:mm:ss' }}</td> <!-- Display date created -->
         <td>{{ task.last_modified | date: 'yyyy-MM-dd HH:mm:ss' }}</td> <!-- Display last modified -->
 
-        <td>
-          <button 
-            class="btn btn-warning btn-sm mx-1"
-            (click) = "edit_task(task)">
-            Edit Task
-          </button>
-          <button 
-            class="btn btn-danger btn-sm mx-1"
-            (click) = "delete_task(task.id)">
-            Delete Task
-          </button>
+        <td class="text-center"> <!-- Centering the buttons -->
+          <div class="btn-group"> <!-- Grouping the buttons for better control -->
+            <button 
+              class="btn btn-warning btn-sm mx-1"
+              (click) = "edit_task(task)">
+              Edit Task
+            </button>
+            <button 
+              class="btn btn-danger btn-sm mx-1"
+              (click) = "delete_task(task.id)">
+              Delete Task
+            </button>
+          </div>
         </td>
 
         <!-- Editing Mode -->
