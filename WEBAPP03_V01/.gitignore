@@ -1,0 +1,36 @@
+# For .NET
+API/bin/
+API/obj/
+API/.user/
+API/.vs/
+API/.vspscc/
+API/.vssscc/
+API/.csproj.user/
+##############################
+bin/
+obj/
+.user/
+.vs/
+.vspscc/
+.vssscc/
+.csproj.user/
+.vs/
+
+# For Angular
+UI/node_modules/
+UI/dist/
+UI/.angular/
+UI/.idea/
+UI/.vscode/
+UI/.env
+##############################
+node_modules/
+dist/
+.angular/
+.idea/
+.vscode/
+.env
+
+# General
+*.log
+*.DS_Store
