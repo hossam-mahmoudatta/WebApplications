@@ -2,5 +2,20 @@
   "dependencies": {
     "express": "^4.21.1",
     "mongoose": "^8.7.2"
+  },
+  "name": "backend_nodejs-mongodb",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run start --prefix frontend\" \"npm run start --prefix backend\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "eslint": "^9.13.0",
+    "prettier": "^3.3.3"
   }
 }
