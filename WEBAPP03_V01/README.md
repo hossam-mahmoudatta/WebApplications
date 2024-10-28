@@ -25,6 +25,28 @@ This section will display the featured products of the week/month/year
 - Frequently Purchased
 
 #### Footer
+Footer should contain
+- Help Page
+- About Us
+- Contact Us
+- Your Account
+- Your Orders
+- Your Carts
+
+### Cart
+- Cart Summary
+- Cart Items
+- Go to Checkout
+
+### Checkout
+- Payment Method
+- Order Summary
+- Order Confirmation
+
+
+
+
+
 
 
 
