@@ -9,6 +9,7 @@ Database: MongoDB
 
 ## Website Structure
 The website will be structured as follows:
+
 ### Home Page
 ####  Header
 Header should contain
@@ -33,29 +34,35 @@ Footer should contain
 - Your Orders
 - Your Carts
 
-### Cart
+### Cart Page
 - Cart Summary
 - Cart Items
 - Go to Checkout
 
-### Checkout
+### Checkout Page
 - Payment Method
 - Order Summary
 - Order Confirmation
 
+### Admin Panel
+- User Management
+- Product Management
+- Order Management
+
+### Products Page
+
+
+## Installation Requirements
+
+### For Windows OS:
+To run the application, you need to install the following packages:
+- Node.js
+- Express.js
+- MongoDB
 
 
 
 
-
-
-
-
-
-- Product Page
-- Cart Page
-- Checkout Page
-- Admin Panel
 
 
 
@@ -63,10 +70,8 @@ Footer should contain
 
 
 Todo Tommmorow:
-### Kellani - RadioTherapy
+
 ### Mohammed Abd El7aleem - GyneComastia
-### Loay Qassem - Breast Oncology
-### Ekramy Mansour - Pain Management
 ### Tagamoa Houses
 ### Call Acacia Compound
 ### Stamping the Pain Paper
