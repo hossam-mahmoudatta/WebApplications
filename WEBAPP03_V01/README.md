@@ -55,25 +55,16 @@ Footer should contain
 ## Installation Requirements
 
 ### For Windows OS:
-To run the application, you need to install the following packages:
-- Node.js
+First Create the project folder, then create two folders: Backend and Frontend folders.
+Then navigate to the folder in cmd, then run the following the commands to install the following packages:
+
+cd backend
+npm init -y
+npm install express mongoose cors dotenv
+
+Then Create an index.js file to configure your backend server and database connection.
+Create a .env file in the backend folder to securely store your MongoDB URI.
+
+
 - Express.js
 - MongoDB
-
-
-
-
-
-
-
-
-
-
-Todo Tommmorow:
-
-### Mohammed Abd El7aleem - GyneComastia
-### Tagamoa Houses
-### Call Acacia Compound
-### Stamping the Pain Paper
-
-
