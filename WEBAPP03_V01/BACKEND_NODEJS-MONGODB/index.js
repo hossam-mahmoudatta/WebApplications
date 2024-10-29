@@ -1,20 +1,42 @@
 var Express = require("express");
-var Mongoclient = require("mongodb").MongoClient;
+var MongoClient = require("mongodb").MongoClient;
 var cors = require("cors");
 const multer = require("multer");
+require('dotenv').config();  // Load .env variables
+
 
 var app = Express();
-app.use(cors());
-
-var CONNECTION_STRING = "mongodb+srv://hosa:Hossam123@cluster0.r9pmq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const PORT = 5038;
 
 
-var DATABASENAME = "todoappdb";
-var database;
 
-app.listen(5038, () => {
-  Mongoclient.connect(CONNECTION_STRING,(error,client) => {
-    database = client.db(DATABASENAME);
-    console.log("Connected to database");
-  })
-})
+const client = new MongoClient(process.env.MONGO_URI);
+
+
+let db;
+app.use(Express.json());
+
+app.listen(PORT, async () => {
+  try {
+    await client.connect();  // Connect to MongoDB
+    db = client.db("shoppingappDB");  // Specify the database name
+    console.log("You're Connected to MongoDB Database Successfully Hossam!");
+
+    // Middleware to inject db instance into requests
+    app.use((req, res, next) => {
+      req.db = db;
+      next();
+    });
+
+    // Use the tasks route
+    const tasksRouter = require("./routes/tasks");
+    app.use("/tasks", tasksRouter);
+
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+  }
+});
+
+// var CONNECTION_STRING = "mongodb+srv://hosa:Hossam123@cluster0.r9pmq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+
