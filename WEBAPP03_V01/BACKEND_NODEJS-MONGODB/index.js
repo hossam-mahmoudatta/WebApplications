@@ -1,3 +1,5 @@
+// # Main entry point for the server
+
 var Express = require("express");
 var MongoClient = require("mongodb").MongoClient;
 var cors = require("cors");
