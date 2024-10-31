@@ -1,22 +1,31 @@
 // # Main entry point for the server
 
-var Express = require("express");
-var MongoClient = require("mongodb").MongoClient;
-var cors = require("cors");
+const express = require("express");
+const mongoose = require('mongoose');
+const cors = require("cors");
+const MongoClient = require("mongodb").MongoClient;
 const multer = require("multer");
 require('dotenv').config();  // Load .env variables
 
 
-var app = Express();
+var app = express();
 const PORT = 5038;
 
-
+// Middleware
+app.use(cors());           // Enable CORS for cross-origin requests
+app.use(express.json());   // Parse JSON requests
 
 const client = new MongoClient(process.env.MONGO_URI);
 
 
 let db;
-app.use(Express.json());
+
+
+// Route Handlers
+app.use('/products', require('./routes/products')); // Routes for products
+app.use('/users', require('./routes/users')); // Routes for users
+app.use('/orders', require('./routes/orders')); // Routes for orders
+
 
 app.listen(PORT, async () => {
   try {
@@ -38,7 +47,4 @@ app.listen(PORT, async () => {
     console.error("Error connecting to MongoDB:", error);
   }
 });
-
-// var CONNECTION_STRING = "mongodb+srv://hosa:Hossam123@cluster0.r9pmq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
 
