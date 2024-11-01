@@ -1,17 +1,32 @@
 import React from 'react'; // If you have not removed this
+import Navbar from './components/Navbar.jsx';
 import Users from './components/Users.jsx'; // Adjust the path if necessary
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css'
+
+// Import the new pages
+import Home from './pages/Home';
+import Products from './pages/Products';
+import Cart from './pages/Cart';
+import About from './pages/About';
 
 
 const App = () => {
   return (
+    <Router>
+      <Navbar /> {/* Navbar is always displayed */}
       <div>
-          <h1>Shopping App</h1>
-          <Users /> {/* This renders the Users component */}
+        <h1>Shopping App</h1>
+        <Users /> {/* Render Users component in every page */}
       </div>
+      <Routes>
+        {/* Define routes for each page */}
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </Router>
   );
 };
 
