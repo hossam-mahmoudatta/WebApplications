@@ -40,3 +40,38 @@
 .read-the-docs {
   color: #888;
 }
+
+
+
+/* Default Light Theme */
+body.light-theme {
+  background-color: white;
+  color: black;
+}
+
+/* Dark Theme */
+body.dark-theme {
+  background-color: #121212;
+  color: white;
+}
+
+/* Navbar Theme Adjustments */
+.navbar-light-theme {
+  background-color: #f8f9fa;
+}
+
+.navbar-dark-theme {
+  background-color: #333;
+}
+
+
+/* Additional styles for app container */
+.app-container {
+  min-height: 100vh; /* Ensure the app takes up full height */
+  padding: 20px; /* Add some padding */
+}
+
+/* Style for headings and other elements */
+h1 {
+  margin-bottom: 20px;
+}

@@ -1,7 +1,7 @@
-import React from 'react'; // If you have not removed this
-import Navbar from './components/Navbar.jsx';
-import Users from './components/Users.jsx'; // Adjust the path if necessary
+import React, {useState} from 'react'; // If you have not removed this
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Users from './components/Users'; // Adjust the path if necessary
 import './App.css'
 
 // Import the new pages
@@ -12,20 +12,29 @@ import About from './pages/About';
 
 
 const App = () => {
+  // Step 1: Add theme state
+  const [theme, setTheme] = useState('light');
+
+  // Function to toggle the theme
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
   return (
     <Router>
-      <Navbar /> {/* Navbar is always displayed */}
-      <div>
-        <h1>Shopping App</h1>
-        <Users /> {/* Render Users component in every page */}
+      {/* Pass theme and toggleTheme as props to Navbar */}
+      <div className={`app-container ${theme}-theme`}>
+        <Navbar theme={theme} toggleTheme={toggleTheme} />
+          <h1>Shopping App</h1>
+          <Users /> {/* Render Users component on every page */}
+        <Routes>
+          {/* Define routes for each page */}
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
       </div>
-      <Routes>
-        {/* Define routes for each page */}
-        <Route path="/" element={<Home />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
     </Router>
   );
 };
